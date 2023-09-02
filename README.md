@@ -2,8 +2,8 @@
 
 [![Build Status](https://github.com/allegro/json-avro-converter/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/allegro/json-avro-converter/actions/workflows/ci.yml?query=branch%3Amaster)
 
-> **This project is no longer in active development and is currently in maintenance mode.** 
-We will no longer actively review issues, merge pull-requests, and release new versions. If you are interested in developing it, please fork this repository.
+> **This project is forked from allegro.** 
+There will be an effort to maintain the original project going forward. Anyone wanting to contribute to this effort is welcome.
 
 This project is a JSON to Avro conversion tool designed to make migration to Avro easier. It includes a simple command line validator.
 
