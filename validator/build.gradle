@@ -1,31 +1,30 @@
 
 plugins {
-    id 'java'
-    id 'groovy'
-    // does not work with Java 10
-    // id 'jacoco'
-    id 'application'
-    id 'com.github.johnrengelman.shadow' version '5.1.0'
+    id ('java')
+    id ('groovy')
+    id ('application')
+    id ('com.github.johnrengelman.shadow') version '7.1.2'
 }
 
 shadowJar {
-    baseName = 'json2avro-validator'
-    classifier = ''
+    archiveBaseName.set('json2avro-validator')
+    archiveClassifier.set('')
 }
 
 dependencies {
-    compile project(':converter')
+    implementation project(':converter')
 
-    compile group: 'com.beust', name: 'jcommander', version: '1.72'
-    compile group: 'com.google.guava', name: 'guava', version: '24.0-jre'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.10'
+    implementation group: 'com.beust', name: 'jcommander', version: '1.82'
+    implementation group: 'com.google.guava', name: 'guava', version: '30.0-jre'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.7.1'
 
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.9'
+    implementation 'org.apache.avro:avro:1.11.2'
 
-    testCompile group: 'org.spockframework', name: 'spock-core', version: versions.spock
-    testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: versions.groovy
-    testCompile group: 'com.jayway.awaitility', name: 'awaitility', version: '1.7.0'
+    testImplementation group: 'org.spockframework', name: 'spock-core', version: versions.spock
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy-all', version: versions.groovy
+    testImplementation group: 'com.jayway.awaitility', name: 'awaitility', version: '1.7.0'
 }
 
 mainClassName = 'tech.allegro.schema.json2avro.validator.ValidatorRunner'

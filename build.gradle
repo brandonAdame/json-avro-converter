@@ -3,7 +3,7 @@ import java.time.Duration
 plugins {
     id 'java'
     id 'pl.allegro.tech.build.axion-release' version '1.13.6'
-    id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
+//    id 'io.github.gradle-nexus.publish-plugin' version '2.0.0-rc-1'
 }
 
 scmVersion {
@@ -18,21 +18,21 @@ scmVersion {
     }
 }
 
-nexusPublishing {
-    packageGroup = "tech.allegro"
-    repositories {
-        sonatype {
-            username = System.getenv("SONATYPE_USERNAME")
-            password = System.getenv("SONATYPE_PASSWORD")
-        }
-    }
-    transitionCheckOptions {
-        maxRetries.set(15)
-        delayBetween.set(Duration.ofMillis(5000))
-    }
-}
+//nexusPublishing {
+//    packageGroup = "tech.allegro"
+//    repositories {
+//        sonatype {
+//            username = System.getenv("SONATYPE_USERNAME")
+//            password = System.getenv("SONATYPE_PASSWORD")
+//        }
+//    }
+//    transitionCheckOptions {
+//        maxRetries.set(15)
+//        delayBetween.set(Duration.ofMillis(5000))
+//    }
+//}
 
-sourceCompatibility = 1.8
+sourceCompatibility = 17
 
 allprojects {
     project.group = 'tech.allegro.schema.json2avro'
@@ -43,8 +43,8 @@ subprojects {
     apply plugin: 'java'
 
     project.ext.versions = [
-            spock : '1.3-groovy-2.5',
-            groovy: '2.5.8'
+            spock : '2.3-groovy-2.5',
+            groovy: '2.5.23'
     ]
 
     repositories {
@@ -57,7 +57,7 @@ subprojects {
         }
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.compilerArgs += ['-Xlint:unchecked', '-Xlint:deprecation']
     }
 }
@@ -71,50 +71,50 @@ configure(subprojects - project(':validator')) {
         withSourcesJar()
     }
 
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = project.name
-                from(components.java)
-
-                pom {
-                    name = project.name
-                    description = 'JSON to Avro conversion tool designed to make migration to Avro easier'
-                    url = 'https://github.com/allegro/json-avro-converter'
-                    inceptionYear = '2016'
-
-                    scm {
-                        url = 'https://github.com/allegro/json-avro-converter'
-                        connection = 'scm:git@github.com:allegro/json-avro-converter.git'
-                        developerConnection = 'scm:git@github.com:allegro/json-avro-converter.git'
-                    }
-
-                    licenses {
-                        license {
-                            name = 'The Apache Software License, Version 2.0'
-                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id = 'skylab'
-                            name = 'Team Skylab'
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (System.getenv("GPG_KEY_ID")) {
-        signing {
-            useInMemoryPgpKeys(
-                    System.getenv("GPG_KEY_ID"),
-                    System.getenv("GPG_PRIVATE_KEY"),
-                    System.getenv("GPG_PRIVATE_KEY_PASSWORD")
-            )
-            sign publishing.publications.mavenJava
-        }
-    }
+//    publishing {
+//        publications {
+//            mavenJava(MavenPublication) {
+//                artifactId = project.name
+//                from(components.java)
+//
+//                pom {
+//                    name = project.name
+//                    description = 'JSON to Avro conversion tool designed to make migration to Avro easier'
+//                    url = 'https://github.com/allegro/json-avro-converter'
+//                    inceptionYear = '2016'
+//
+//                    scm {
+//                        url = 'https://github.com/allegro/json-avro-converter'
+//                        connection = 'scm:git@github.com:allegro/json-avro-converter.git'
+//                        developerConnection = 'scm:git@github.com:allegro/json-avro-converter.git'
+//                    }
+//
+//                    licenses {
+//                        license {
+//                            name = 'The Apache Software License, Version 2.0'
+//                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                        }
+//                    }
+//
+//                    developers {
+//                        developer {
+//                            id = 'skylab'
+//                            name = 'Team Skylab'
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    if (System.getenv("GPG_KEY_ID")) {
+//        signing {
+//            useInMemoryPgpKeys(
+//                    System.getenv("GPG_KEY_ID"),
+//                    System.getenv("GPG_PRIVATE_KEY"),
+//                    System.getenv("GPG_PRIVATE_KEY_PASSWORD")
+//            )
+//            sign publishing.publications.mavenJava
+//        }
+//    }
 }
